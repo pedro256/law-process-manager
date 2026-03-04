@@ -3,6 +3,8 @@
 import { signOut as nextAuthSignOut } from "next-auth/react";
 import { signOut as firebaseSignOut, getAuth } from "firebase/auth";
 import { appFirebase } from "@/lib/firebase";
+import SmartDashboard from "./components/SmartDashboard";
+import { dashboardStats } from "@/data/mockData";
 
 export default function DashBoard() {
   async function Logout() {
@@ -12,11 +14,15 @@ export default function DashBoard() {
     await nextAuthSignOut();
   }
   return (
+    // <main>
+    //   HELLO
+    //   <div className="border p-4 rounded w-min bg-primary ">
+    //     <button className="text-foreground" onClick={Logout}>sair</button>
+    //   </div>
+    // </main>
+    // <LoadingScreen/>
     <main>
-      HELLO
-      <div className="border p-4 rounded w-min bg-primary ">
-        <button className="text-foreground" onClick={Logout}>sair</button>
-      </div>
+      <SmartDashboard stats={dashboardStats}/>
     </main>
   );
 }
