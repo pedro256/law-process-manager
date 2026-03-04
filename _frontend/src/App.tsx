@@ -19,8 +19,10 @@ const App: React.FC = () => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
+    console.log("e")
     return <LoadingScreen />;
   }
+ 
 
   return (
     <Routes>
