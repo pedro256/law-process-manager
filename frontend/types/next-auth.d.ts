@@ -3,6 +3,7 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
   interface Session {
     firebaseToken?: string;
+    expiresAt?:number;
   }
   interface User{
     firebaseToken:string

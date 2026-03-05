@@ -1,14 +1,14 @@
-'use client'
-import React from 'react'
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
+"use client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -16,9 +16,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -26,8 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ClientFormValues, clientSchema } from './validators/register-client-form-validator'
-import { Plus } from 'lucide-react'
+import {
+  ClientFormValues,
+  clientSchema,
+} from "./validators/register-client-form-validator";
+import { Plus } from "lucide-react";
 
 export function RegisterClientModal() {
   const form = useForm<ClientFormValues>({
@@ -39,133 +42,148 @@ export function RegisterClientModal() {
       type: "pf",
       document: "",
     },
-  })
+  });
 
   async function onSubmit(data: ClientFormValues) {
     try {
       // Exemplo de Request (pode ser axios ou fetch)
-      const response = await fetch('/api/clients', {
-        method: 'POST',
+      const response = await fetch("/api/clients", {
+        method: "POST",
         body: JSON.stringify(data),
-      })
+      });
 
       if (response.ok) {
-        alert("Cliente cadastrado com sucesso!")
-        form.reset()
+        alert("Cliente cadastrado com sucesso!");
+        form.reset();
+        document.getElementById("close-modal-regist-client")?.click();
       }
     } catch (error) {
-      console.error("Erro ao cadastrar:", error)
+      console.error("Erro ao cadastrar:", error);
+    }
+  }
+  function onOpenChange(open: boolean) {
+    if (!open) {
+      form.reset();
+      form.clearErrors();
     }
   }
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <div className="px-3 py-2 flex items-center border-2 border-primary rounded bg-primary text-primary-foreground">
           <Plus size={18} className="mr-1" />
-            <p>Novo Cliente</p>
+          <p>Novo Cliente</p>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-156.25">
         <DialogHeader>
           <DialogTitle>Cadastrar Cliente</DialogTitle>
         </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            {/* Nome */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nome</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nome completo" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* Email */}
+        <div className="mt-8">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>E-mail</FormLabel>
+                    <FormLabel>Nome</FormLabel>
                     <FormControl>
-                      <Input placeholder="email@exemplo.com" {...field} />
+                      <Input placeholder="Nome completo" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Telefone */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Telefone</FormLabel>
-                    <FormControl>
-                      <Input placeholder="(00) 00000-0000" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* Tipo */}
-              <FormField
-                control={form.control}
-                name="type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tipo</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Email */}
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail</FormLabel>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione" />
-                        </SelectTrigger>
+                        <Input placeholder="email@exemplo.com" {...field} />
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="pf">Pessoa Física</SelectItem>
-                        <SelectItem value="cnpj">Pessoa Jurídica</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Documento */}
-              <FormField
-                control={form.control}
-                name="document"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Documento (CPF/CNPJ)</FormLabel>
-                    <FormControl>
-                      <Input placeholder="000.000.000-00" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                {/* Telefone */}
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Telefone</FormLabel>
+                      <FormControl>
+                        <Input placeholder="(00) 00000-0000" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
-            <Button type="submit" className="w-full">
-              Salvar Cadastro
-            </Button>
-          </form>
-        </Form>
+              <div className="grid grid-cols-2 gap-4">
+                {/* Tipo */}
+                <FormField
+                  control={form.control}
+                  name="type"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tipo</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="pf">Pessoa Física</SelectItem>
+                          <SelectItem value="cnpj">Pessoa Jurídica</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Documento */}
+                <FormField
+                  control={form.control}
+                  name="document"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Documento (CPF/CNPJ)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="000.000.000-00" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <Button type="submit" className="w-full">
+                Salvar Cadastro
+              </Button>
+              <DialogClose id="close-modal-regist-client" className="w-full">
+                <Button type="reset" variant="ghost">
+                  Cancelar
+                </Button>
+              </DialogClose>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

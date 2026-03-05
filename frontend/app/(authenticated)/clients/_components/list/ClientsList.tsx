@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import { Search, Plus, UserX, Filter } from "lucide-react";
 
 import Link from "next/link";
-import { RegisterClientModal } from "../new/modal-register-client";
-import { Client } from "@/app/(authenticated)/dashboard/models";
+import ClientItem from "./models/ClientItem";
 
 interface ClientsListProps {
-  clients: Client[];
+  clients: ClientItem[];
 }
 
 const ClientsList: React.FC<ClientsListProps> = ({ clients }) => {
@@ -27,16 +26,9 @@ const ClientsList: React.FC<ClientsListProps> = ({ clients }) => {
   });
 
   return (
-    <div className="card">
-      <div className="p-6 border-b border-gray-100">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-          <div>
-            <h2 className="text-xl text-gray-800">Clientes</h2>
-          </div>
-          <div>
-            <RegisterClientModal/>
-          </div>
-        </div>
+    <div>
+      <div className="border-b border-gray-100">
+
 
         <div className="mt-4 flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">

@@ -10,7 +10,17 @@ export default function Clients() {
           Gerenciamento de Clientes
         </h1>
       </div>
-      <ClientsList clients={clients} />
+      <div className="bg-card rounded p-6 ">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 pb-4">
+          <div>
+            <h2 className="text-xl text-gray-800">Clientes</h2>
+          </div>
+          <div>
+            <RegisterClientModal />
+          </div>
+        </div>
+        <ClientsList clients={clients} />
+      </div>
     </div>
   );
 }

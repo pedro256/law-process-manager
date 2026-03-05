@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     <>
       {/* Mobile sidebar */}
       <div 
-        className={`fixed inset-y-0 left-0 z-30 w-64 bg-white transition-transform transform lg:hidden ${
+        className={`fixed inset-y-0 left-0 z-30 w-64 bg-background transition-transform transform lg:hidden ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -53,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       
       {/* Desktop sidebar */}
       <div className="hidden lg:flex lg:flex-shrink-0">
-        <div className="w-64 border-r border-gray-200 bg-white flex flex-col">
+        <div className="w-64 border-r border-gray-200 bg-background flex flex-col">
           <div className="flex items-center px-4 py-3 border-b border-gray-200">
             <Link href="/" className="flex items-center space-x-2">
               <Scale className="text-primary-600" size={28} />

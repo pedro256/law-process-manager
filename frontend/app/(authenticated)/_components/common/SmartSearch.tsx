@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Filter, X, Clock, FileText, Users, Briefcase } from 'lucide-react';
-import { SearchResult } from '../../types';
+import { SearchResult } from './models/SearchResult';
+
 
 interface SmartSearchProps {
   onResultSelect?: (result: SearchResult) => void;
@@ -146,7 +147,7 @@ const SmartSearch: React.FC<SmartSearchProps> = ({
             setIsOpen(true);
           }}
           onFocus={() => setIsOpen(true)}
-          className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+          className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-background"
         />
         {query && (
           <button

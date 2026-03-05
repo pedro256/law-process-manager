@@ -34,6 +34,7 @@ export const authOptions: NextAuthOptions = {
           return {
             id: userCredential.user.uid,
             email: userCredential.user.email,
+            name: userCredential.user.displayName,
             firebaseToken: idToken,
             displayName: userCredential.user.displayName,
           };
@@ -52,16 +53,17 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        const decoded: any = jwtDecode(user.firebaseToken);
+        // const decoded: any = jwtDecode(user.firebaseToken);
         token.firebaseToken = user.firebaseToken;
-        token.firebaseExp = decoded.exp;
+        // token.firebaseExp = decoded.exp;
       }
-      
+     
       return token;
     },
 
-    async session({ session, token }) {
+    async session({ session, token}) {
       session.firebaseToken = token.firebaseToken as string;
+      // session.expiresAt = token.firebaseExp;
       return session;
     },
   },

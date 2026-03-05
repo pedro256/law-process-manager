@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot, User, Lightbulb, FileText, Calendar, AlertTriangle } from 'lucide-react';
-import { ChatMessage } from '../../types';
+import { ChatMessage } from './models/ChatMessage';
 
 interface AIAssistantProps {
   isOpen: boolean;
@@ -102,16 +102,16 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ isOpen, onToggle }) => {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col z-50">
+    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-background rounded-lg shadow-2xl border border-gray-200 flex flex-col z-50">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-primary-600 text-white rounded-t-lg">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-primary text-primary-foreground rounded-t-lg">
         <div className="flex items-center space-x-2">
           <Bot size={20} />
           <span className="font-medium">Assistente IA</span>
         </div>
         <button
           onClick={onToggle}
-          className="text-white hover:text-gray-200 transition-colors"
+          className="text-primary-foreground hover:text-gray-200 transition-colors"
         >
           <X size={20} />
         </button>
