@@ -23,8 +23,8 @@ public class ClientService : IClientService
     {
         await clienteRepository.AdicionarAsync(request);
     }
-    public async Task<IEnumerable<ClienteItemResponseDTO>> ListarTodos()
+    public async Task<IEnumerable<ClienteItemResponseDTO>> getAllByUserId(string UserID)
     {
-        return await clienteRepository.ObterTodosAsync();
+        return await clienteRepository.GetAllClientsByUserIdAsync(UserID);
     }
 }

@@ -1,7 +1,6 @@
 using Api;
-using FirebaseAdmin;
-using Google.Apis.Auth.OAuth2;
-using Google.Cloud.Firestore;
+using Api.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,23 +15,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// FIREBASE CONFIG
-
-string jsonPath = Path.Combine(AppContext.BaseDirectory, "firebase-config.json");
-Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", jsonPath);
-var serviceAccountCredential = CredentialFactory.FromFile<ServiceAccountCredential>(jsonPath);
-GoogleCredential credential = serviceAccountCredential.ToGoogleCredential();
-FirebaseApp.Create(new AppOptions()
-{
-    Credential = credential
-});
-var projectId = builder.Configuration["Firebase:ProjectId"];
-builder.Services.AddSingleton(s => FirestoreDb.Create(projectId));
 
 
 
 
+FirebaseConfigurations.Config(builder);
 DependenceInjections.Config(builder);
+AuthenticationConfigurations.Config(builder);
 
 var app = builder.Build();
 

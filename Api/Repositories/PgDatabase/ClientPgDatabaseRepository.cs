@@ -30,7 +30,7 @@ public class ClientPgDatabaseRepository : IClienteRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<ClienteItemResponseDTO>> ObterTodosAsync()
+    public Task<IEnumerable<ClienteItemResponseDTO>> GetAllClientsByUserIdAsync(string UserID)
     {
         throw new NotImplementedException();
     }

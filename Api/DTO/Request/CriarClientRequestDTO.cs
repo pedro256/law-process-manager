@@ -30,4 +30,6 @@ public class CriarClientRequestDTO
     [Required(ErrorMessage = "O status é obrigatório.")]
     [RegularExpression(@"^[AI]$", ErrorMessage = "O status deve ser 'A' (Ativo) ou 'I' (Inativo).")]
     public string Status { get; set; } = "A";
+
+    public string UserId {get;set;}="";
 }

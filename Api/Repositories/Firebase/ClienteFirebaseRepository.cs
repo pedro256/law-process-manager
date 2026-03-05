@@ -15,12 +15,15 @@ public class ClienteFirebaseRepository : IClienteRepository
 {
     private readonly FirestoreDb _firestoreDb;
     private const string CollectionName = "clientes";
+    private const string UsuarioCollectionName = "usuarios";
 
-    public ClienteFirebaseRepository(FirestoreDb db)
+    public ClienteFirebaseRepository(
+        FirestoreDb db
+        )
     {
         _firestoreDb = db;
     }
-    
+
     public async Task AdicionarAsync(CriarClientRequestDTO cliente)
     {
         ClientesModel model = new ClientesModel();
@@ -29,8 +32,13 @@ public class ClienteFirebaseRepository : IClienteRepository
         model.ContatoCelular = cliente.ContatoCelular;
         model.ContatoEmail = cliente.ContatoEmail;
         model.ClassificacaoJuridica = cliente.ClassificacaoJuridica;
+
+        CollectionReference colRef = _firestoreDb
+            .Collection(UsuarioCollectionName)
+            .Document(cliente.UserId)
+            .Collection(CollectionName);
+
         
-        CollectionReference colRef = _firestoreDb.Collection(CollectionName);
         // O Firestore gera o ID automaticamente se você não passar um
         await colRef.AddAsync(model);
     }
@@ -50,23 +58,27 @@ public class ClienteFirebaseRepository : IClienteRepository
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<ClienteItemResponseDTO>> ObterTodosAsync()
+    public async Task<IEnumerable<ClienteItemResponseDTO>> GetAllClientsByUserIdAsync(string UserID)
     {
-        Query query = _firestoreDb.Collection(CollectionName);
+        Query query = _firestoreDb
+            .Collection(UsuarioCollectionName)
+            .Document(UserID)
+            .Collection(CollectionName);
+
         QuerySnapshot snapshot = await query.GetSnapshotAsync();
-        
+
         return snapshot.Documents
             .Select(d => d.ConvertTo<ClientesModel>())
-            .Select(m => new ClienteItemResponseDTO 
-                {
-                    Id = m.Id,
-                    NomePreferido = m.NomePreferido,
-                    ContatoCelular = m.ContatoCelular,
-                    ClassificacaoJuridica = m.ClassificacaoJuridica,
-                    ContatoEmail= m.ContatoEmail,
-                    Identidade= m.Identidade,
-                    Status = m.Status
-                })
+            .Select(m => new ClienteItemResponseDTO
+            {
+                Id = m.Id,
+                NomePreferido = m.NomePreferido,
+                ContatoCelular = m.ContatoCelular,
+                ClassificacaoJuridica = m.ClassificacaoJuridica,
+                ContatoEmail = m.ContatoEmail,
+                Identidade = m.Identidade,
+                Status = m.Status
+            })
             .ToList();
     }
 }

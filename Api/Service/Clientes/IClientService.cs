@@ -11,5 +11,5 @@ public interface IClientService
 {
     Task CriarCliente(CriarClientRequestDTO request);
 
-    Task<IEnumerable<ClienteItemResponseDTO>> ListarTodos();
+    Task<IEnumerable<ClienteItemResponseDTO>> getAllByUserId(string UserID);
 }

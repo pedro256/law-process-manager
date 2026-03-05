@@ -10,7 +10,7 @@ namespace Api.Repositories.Base;
 
 public interface IClienteRepository
 {
-    Task<IEnumerable<ClienteItemResponseDTO>> ObterTodosAsync();
+    Task<IEnumerable<ClienteItemResponseDTO>> GetAllClientsByUserIdAsync(string UserID);
     Task<ClienteDetailsReponseDTO?> ObterPorIdAsync(int id);
     Task AdicionarAsync(CriarClientRequestDTO cliente);
     Task AtualizarAsync(CriarClientRequestDTO cliente);

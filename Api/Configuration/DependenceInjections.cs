@@ -9,7 +9,7 @@ using Api.Service.Autenticador.Firebase;
 using Api.Service.Clientes;
 using Api.Service.Usuario;
 
-namespace Api
+namespace Api.Configuration
 {
     public class DependenceInjections
     {

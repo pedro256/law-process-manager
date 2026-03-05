@@ -13,7 +13,7 @@ public class UsuarioFirebaseRepository: IUsuarioRepository
 {
 
     private readonly FirestoreDb _firestoreDb;
-    private const string CollectionName = "clientes";
+    private const string CollectionName = "usuarios";
 
     public UsuarioFirebaseRepository(FirestoreDb db)
     {
