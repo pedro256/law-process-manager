@@ -361,6 +361,7 @@
   --color-border: var(--border);
   --color-border-divider: var(--border-divider);
   --color-destructive: var(--destructive);
+  --color-error: var(--error);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
