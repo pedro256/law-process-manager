@@ -17,6 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useDialog } from "@/components/ui/dialog/dialog-provider";
 
 export default function LoginPage() {
   const {
@@ -29,6 +30,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dialog = useDialog()
 
   async function handleGoogleLogin() {
     setLoading(true);
@@ -36,19 +38,24 @@ export default function LoginPage() {
     setLoading(false);
   }
   const onSubmit = async (data: any) => {
-    const response = await signIn("application", {
-      email:data.username,
-      password:data.password,
-      redirect: false,
-    });
-    if (response?.error) {
-      setError(response.error)
-      return;
+    try {
+      const response = await signIn("application", {
+        email: data.username,
+        password: data.password,
+        redirect: false,
+      });
+      if (response?.error) {
+        setError(response.error)
+        return;
+      }
+      // dialog.success({
+      //   title:"Usuário logado!"
+      // })
+      router.push("/dashboard")
+    }catch(e:any){
+      dialog.error(e.message)
     }
-    // dialog.success({
-    //   title:"Usuário logado!"
-    // })
-    router.push("/dashboard")
+    
   };
 
   return (
@@ -60,6 +67,7 @@ export default function LoginPage() {
             Acesse sua conta para continuar
           </p>
         </div>
+        {error?(<span className="text-destructive font-medium text-xs">{error}</span>):undefined}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <FieldGroup className="flex flex-col gap-5">
