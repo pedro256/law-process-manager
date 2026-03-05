@@ -1,5 +1,6 @@
 import { clients } from "@/data/mockData";
-import ClientsList from "./_components/ClientsList";
+import ClientsList from "./_components/list/ClientsList";
+import { RegisterClientModal } from "./_components/new/modal-register-client";
 
 export default function Clients() {
   return (
@@ -9,7 +10,6 @@ export default function Clients() {
           Gerenciamento de Clientes
         </h1>
       </div>
-
       <ClientsList clients={clients} />
     </div>
   );

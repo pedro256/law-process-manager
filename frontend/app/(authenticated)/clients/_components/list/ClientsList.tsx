@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { Search, Plus, UserX, Filter } from "lucide-react";
-import { Client } from "../../dashboard/models";
+
 import Link from "next/link";
+import { RegisterClientModal } from "../new/modal-register-client";
+import { Client } from "@/app/(authenticated)/dashboard/models";
 
 interface ClientsListProps {
   clients: Client[];
@@ -31,12 +33,8 @@ const ClientsList: React.FC<ClientsListProps> = ({ clients }) => {
           <div>
             <h2 className="text-xl text-gray-800">Clientes</h2>
           </div>
-          <div className=" border-2 border-primary rounded bg-primary">
-            <Link href="/clients/new" className="text-white flex px-6 py-2 items-center">
-            
-              <Plus size={18} className="mr-1" />
-              <p>Novo Cliente</p>
-            </Link>
+          <div>
+            <RegisterClientModal/>
           </div>
         </div>
 
