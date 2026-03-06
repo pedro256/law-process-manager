@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Search, Plus, UserX, Filter } from "lucide-react";
-import { useDebouncedCallback } from "use-debounce";
 
 import Link from "next/link";
 import { RegisterClientModal } from "./_components/new/modal-register-client";
@@ -9,6 +8,8 @@ import { listClientsAction } from "./_components/list/action";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useForm } from "react-hook-form";
+import ClientItem from "./_components/list/models/ClientItem";
+import { Button } from "@/components/ui/button";
 
 interface FilterInputs {
   query: string;
@@ -18,6 +19,8 @@ export default function Clients() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [clientsFilter, setClientsFilter] = useState<ClientItem[]>([]);
 
   // Inicializa o form com o valor que já estiver na URL (se houver)
   const { register, handleSubmit } = useForm<FilterInputs>({
@@ -76,27 +79,38 @@ export default function Clients() {
                     type="text"
                     placeholder="Buscar por nome, email ou documento..."
                     className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
+                <div>
+                  <div title="Mais Filtro" className="hover:bg-secondary border p-3 flex rounded-md w-10 h-10 items-center justify-center">
+                    <div>
+                      <Filter size={24} className="text-gray-500" />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <Button>
+                    <div className="px-4 y-4 flex items-center gap-2">
+                      <Search />
+                      <span>Buscar</span>
+                    </div>
+                  </Button>
+                </div>
 
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <Filter size={18} className="text-gray-500 mr-2" />
                   <select
                     className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    value={filterCategory}
-                    onChange={(e) => setFilterCategory(e.target.value)}
                   >
                     <option value="all">Todas categorias</option>
                     <option value="individual">Individual</option>
                     <option value="empresarial">Empresarial</option>
                   </select>
-                </div>
+                </div> */}
               </div>
             </div>
 
-            {filteredClients.length > 0 ? (
+            {clientsFilter.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
@@ -122,7 +136,7 @@ export default function Clients() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {filteredClients.map((client) => (
+                    {clientsFilter.map((client) => (
                       <tr
                         key={client.id}
                         className="hover:bg-gray-50 transition-colors"
@@ -133,29 +147,29 @@ export default function Clients() {
                             className="group"
                           >
                             <div className="text-sm font-medium text-gray-800 group-hover:text-primary-600">
-                              {client.name}
+                              {client.nomePreferido}
                             </div>
                             <div className="text-xs text-gray-500">
                               Desde{" "}
-                              {new Date(client.createdAt).toLocaleDateString(
+                              {/* {new Date(client.createdAt).toLocaleDateString(
                                 "pt-BR",
-                              )}
+                              )} */}
                             </div>
                           </Link>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-800">
-                            {client.email}
+                            {client.contatoEmail}
                           </div>
                           <div className="text-xs text-gray-500">
-                            {client.phone}
+                            {client.contatoCelular}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                          {client.document}
+                          {client.identidade}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span
+                          {/* <span
                             className={`badge ${
                               client.category === "individual"
                                 ? "badge-blue"
@@ -165,10 +179,10 @@ export default function Clients() {
                             {client.category === "individual"
                               ? "Individual"
                               : "Empresarial"}
-                          </span>
+                          </span> */}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span
+                          {/* <span
                             className={`badge ${
                               client.status === "active"
                                 ? "badge-green"
@@ -176,7 +190,7 @@ export default function Clients() {
                             }`}
                           >
                             {client.status === "active" ? "Ativo" : "Inativo"}
-                          </span>
+                          </span> */}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
                           <Link
@@ -201,13 +215,7 @@ export default function Clients() {
                   Não encontramos nenhum cliente correspondente aos critérios de
                   busca.
                 </p>
-                <button
-                  onClick={() => {
-                    setSearchTerm("");
-                    setFilterCategory("all");
-                  }}
-                  className="btn btn-outline"
-                >
+                <button onClick={() => {}} className="btn btn-outline">
                   Limpar filtros
                 </button>
               </div>
